@@ -1,0 +1,17 @@
+FROM node:20
+
+WORKDIR /app
+
+COPY package.json .
+COPY ./prisma .
+
+RUN npm install
+RUN npx prisma generate
+
+COPY . . 
+
+RUN npm run build
+
+COPY .next ./.next
+
+CMD ["npm", "run", "dev"]
